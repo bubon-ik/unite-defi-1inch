@@ -1,45 +1,29 @@
-import * as chains from "viem/chains";
+import * as chains from "wagmi/chains";
+
+export const DEFAULT_ALCHEMY_API_KEY = "dummy";
 
 export type ScaffoldConfig = {
   targetNetworks: readonly chains.Chain[];
   pollingInterval: number;
   alchemyApiKey: string;
-  rpcOverrides?: Record<number, string>;
   walletConnectProjectId: string;
   onlyLocalBurnerWallet: boolean;
 };
 
-export const DEFAULT_ALCHEMY_API_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
-
 const scaffoldConfig = {
-  // The networks on which your DApp is live
-  targetNetworks: [chains.hardhat],
+  // Наша главная сеть - Base.
+  targetNetworks: [chains.base],
 
-  // The interval at which your front-end polls the RPC servers for new data
-  // it has no effect if you only target the local network (default is 4000)
   pollingInterval: 30000,
 
-  // This is ours Alchemy's default API key.
-  // You can get your own at https://dashboard.alchemyapi.io
-  // It's recommended to store it in an env variable:
-  // .env.local for local testing, and in the Vercel/system env config for live apps.
-  alchemyApiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || DEFAULT_ALCHEMY_API_KEY,
+  // САМОЕ ВАЖНОЕ:
+  // Хотя переменная называется "alchemyApiKey", мы подставляем в нее твой ключ от Infura из файла .env.local.
+  // Этого достаточно, чтобы приложение правильно подключилось к сети Base через Infura.
+  alchemyApiKey: process.env.INFURA_API_KEY || "d90930df5ac94a5cb60db1c5c9c5e61b",
 
-  // If you want to use a different RPC for a specific network, you can add it here.
-  // The key is the chain ID, and the value is the HTTP RPC URL
-  rpcOverrides: {
-    // Example:
-    // [chains.mainnet.id]: "https://mainnet.buidlguidl.com",
-  },
+  walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "7b6f6c4eb808beb7bd577b581f1688f1",
 
-  // This is ours WalletConnect's default project ID.
-  // You can get your own at https://cloud.walletconnect.com
-  // It's recommended to store it in an env variable:
-  // .env.local for local testing, and in the Vercel/system env config for live apps.
-  walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "3a8170812b534d0ff9d794f19a901d64",
-
-  // Only show the Burner Wallet when running on hardhat network
   onlyLocalBurnerWallet: true,
-} as const satisfies ScaffoldConfig;
+} as const;
 
 export default scaffoldConfig;
