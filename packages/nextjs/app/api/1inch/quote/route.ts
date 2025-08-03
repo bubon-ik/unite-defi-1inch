@@ -11,10 +11,7 @@ export async function GET(request: NextRequest) {
   const chainId = 8453; // Base
 
   const url = `https://api.1inch.dev/swap/v6.0/${chainId}/quote?${searchParams.toString()}`;
-
-  try {
-    const response = await fetch(url, {
-      headers: {
+ 
         Authorization: `Bearer ${API_KEY}`,
       },
       cache: "no-store",
