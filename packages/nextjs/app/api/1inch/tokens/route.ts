@@ -38,4 +38,4 @@ export async function GET() {
     console.error("--- [СЕРВЕР] НЕПРЕДВИДЕННАЯ ОШИБКА:", error);
     return NextResponse.json({ error: "Внутренняя ошибка сервера." }, { status: 500 });
   }
-}
+} 
